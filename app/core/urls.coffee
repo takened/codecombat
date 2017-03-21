@@ -11,3 +11,7 @@ module.exports =
     url = "/play/level/#{level.get('slug')}?course=#{courseInstance.get('courseID')}&course-instance=#{courseInstance.id}"
     url += "&codeLanguage=#{level.get('primerLanguage')}" if level.get('primerLanguage')
     url
+
+  courseWorldMap: ({course, courseInstance, classroom}) ->
+    console.log "Sadness for", course
+    "/play/#{course.get('campaignID')}?course-instance=#{courseInstance.id}"

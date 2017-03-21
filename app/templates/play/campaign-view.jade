@@ -65,7 +65,7 @@ if view.showAds()
             div(class="level-kind " + level.kind)= kindKey
             - var acronym = level.name.replace(/(A |The )/g, '').replace(/[^A-Z]/g, '');
             .level-acronym= acronym
-          if !level.hidden
+          if !level.hidden && !level.noFlag
             if level.replayable
               img.banner(src="/images/pages/play/level-banner-replayable.png")
             else if level.type === 'hero-ladder' || level.type === 'course-ladder'
@@ -99,7 +99,7 @@ if view.showAds()
           - var playCount = levelPlayCountMap[level.slug]
           .progress.progress-striped.active.hide
             .progress-bar(style="width: 100%")
-          - var showsLeaderboard = levelStatusMap[level.slug] === 'complete' && ((level.scoreTypes && level.scoreTypes.length) || ['hero-ladder', 'course-ladder'].indexOf(level.type) !== -1);
+          - var showsLeaderboard = view.shouldShow('leaderboard') && (levelStatusMap[level.slug] === 'complete' && ((level.scoreTypes && level.scoreTypes.length) || ['hero-ladder', 'course-ladder'].indexOf(level.type) !== -1));
 
           div(class="level-info " + (levelStatusMap[level.slug] || "") + (level.requiresSubscription ? " premium" : "") + (showsLeaderboard ? " shows-leaderboard" : ""))
             .level-status

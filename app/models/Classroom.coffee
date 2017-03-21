@@ -194,3 +194,10 @@ module.exports = class Classroom extends CocoModel
     options.url = @url() + '/update-courses'
     options.type = 'POST'
     @fetch(options)
+
+  getSetting: (name) ->
+    settings = @get('settings') or {}
+    return settings[name] if name in Object.keys(settings)
+
+    return true if name in ['jump-right-in', 'streamline-victory']
+    return false

@@ -33,6 +33,8 @@ _.extend ClassroomSchema.properties,
       slug: {type: 'string'}
     }
   }
+  settings:
+    type: 'object'
 
 c.extendBasicProperties ClassroomSchema, 'Classroom'
 
