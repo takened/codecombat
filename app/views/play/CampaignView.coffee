@@ -1114,11 +1114,11 @@ module.exports = class CampaignView extends RootView
 
       #level.hidden = level.locked
       level.color = 'rgb(193, 193, 193)' if level.locked
-      level.color = 'rgb(255, 255, 355)' if level.practice
       level.noFlag = level.locked
     return true
 
   shouldShow: (what) ->
+    isStudent = me.get('role') in ['student']
 
     if features.codePlay and what in ['clans', 'settings']
       return false
@@ -1129,8 +1129,24 @@ module.exports = class CampaignView extends RootView
     if what is 'codeplay-ads'
       return !me.finishedAnyLevels() && serverConfig.showCodePlayAds && !features.noAds && me.get('role') isnt 'student'
 
-    if what in ['settings', 'leaderboard', 'status-line', 'back-to-campaigns', 'poll', 'items', 'heros', 'achievements', 'clans', 'poll', 'buy-gems']
-      return !me.get('role') in ['student']
+    if what in ['status-line']
+      return true unless isStudent
+      return false unless @classroom?
+      return @classroom.getSetting('gems') || @classroom.getSetting('xp')
+
+    if what in ['gems']
+      return true unless isStudent
+      return false unless @classroom?
+      return @classroom.getSetting('gems')
+
+    if what in ['level', 'xp']
+      return true unless isStudent
+      return false unless @classroom?
+      return @classroom.getSetting('xp')
+
+
+    if what in ['settings', 'leaderboard', 'back-to-campaigns', 'poll', 'items', 'heros', 'achievements', 'clans', 'poll', 'buy-gems']
+      return !isStudent
 
     if what in 'buy-gems'
       return (me.get('anonymous') is false || me.get('iosIdentifierForVendor') || isIPadApp) && !me.freeOnly() 

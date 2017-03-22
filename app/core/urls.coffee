@@ -13,5 +13,4 @@ module.exports =
     url
 
   courseWorldMap: ({course, courseInstance, classroom}) ->
-    console.log "Sadness for", course
     "/play/#{course.get('campaignID')}?course-instance=#{courseInstance.id}"

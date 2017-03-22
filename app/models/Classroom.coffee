@@ -195,9 +195,11 @@ module.exports = class Classroom extends CocoModel
     options.type = 'POST'
     @fetch(options)
 
-  getSetting: (name) ->
+  getSetting: (name) =>
     settings = @get('settings') or {}
+    propInfo = Classroom.schema.properties.settings.properties
     return settings[name] if name in Object.keys(settings)
+    if name in Object.keys(propInfo)
+      return propInfo[name].default
 
-    return true if name in ['jump-right-in', 'streamline-victory']
     return false

@@ -7,6 +7,7 @@ errors = require 'core/errors'
 module.exports = class ClassroomSettingsModal extends ModalView
   id: 'classroom-settings-modal'
   template: template
+  schema: require 'schemas/models/classroom.schema'
 
   events:
     'click #save-settings-btn': 'onSubmitForm'
@@ -36,9 +37,9 @@ module.exports = class ClassroomSettingsModal extends ModalView
     settings = @classroom.get('settings')
     mayTweak = settings.optionsEditable or me.isAdmin()
     for k in Object.keys(attrs)
-      if /^setting_/.test(k)
+      if /^settings\//.test(k)
         val = (attrs[k].length > 0)
-        key = k.substring(8)
+        key = k.substring(9)
         if val isnt @classroom.getSetting key
           settings[key] = val
         delete attrs[k]

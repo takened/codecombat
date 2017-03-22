@@ -29,6 +29,9 @@ if view.showAds()
         em.spr powered by
         img(src="/images/pages/base/logo.png", title="Powered by CodeCombat - Learn how to code by playing a game ", alt="Powered by CodeCombat")
 
+    if view.shouldShow('back-to-classroom')
+      a.btn.btn-primary.under-logo(href='/play') Back to Classroom
+
   if serverConfig.codeNinjas
     a(href="https://code.ninja")
       img.small-nav-logo.code-ninjas-logo(src="/images/pages/base/code-ninjas-logo-right.png", title="Code Ninjas home", alt="Code Ninjas home")

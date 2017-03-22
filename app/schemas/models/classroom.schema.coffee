@@ -33,9 +33,18 @@ _.extend ClassroomSchema.properties,
       slug: {type: 'string'}
     }
   }
-  settings:
-    type: 'object'
+  settings: c.object {title: 'Classroom Settings', required: []}, {
+    optionsEditable: { type: 'boolean', description: 'Allow teacher to use these settings.', default: false }
+    map: { type: 'boolean', description: 'Classroom map.', default: false }
+    jumpRightIn: { type: 'boolean', description: 'Skip map when stating the day.', default: true }
+    backToMap: { type: 'boolean', description: 'Go back to the map after victory.', default: false }
+    gems: {type: 'boolean', description: 'Allow students to earn gems.', default: false}
+    xp: {type: 'boolean', description: 'Students collect XP and level up.', default: false}
+    #rob: {type: 'number', description: 'Test'}
+  }
+   
 
 c.extendBasicProperties ClassroomSchema, 'Classroom'
+ClassroomSchema.properties.settings.additionalProperties = true
 
 module.exports = ClassroomSchema
