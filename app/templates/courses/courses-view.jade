@@ -105,6 +105,11 @@ block content
 mixin course-instance-body(courseInstance, classroom)
   - var course = view.courses.get(courseInstance.get('courseID'));
   - var stats = classroom.statsForSessions(courseInstance.sessions, course.id);
+  - var bgidx = view.getCourseWorldImageIdx(course)
+  if classroom.getSetting('map') && bgidx > -1
+    div(style="position: relative")
+      div(style="width: 60px; height: 130px; position: absolute; left: -80px; top: -20px")
+        div(style="width: 300px; height: 650px; background-image: url(/images/pages/play/portal-campaigns.png); transform: scale(.18,.18); transform-origin: top left; background-position-x: #{20*bgidx}%")    
   if stats.levels.done
     .text-success
       span.glyphicon.glyphicon-ok
@@ -145,7 +150,7 @@ mixin course-instance-body(courseInstance, classroom)
           span(data-i18n="courses.start")
       else
         - var url = view.urls.courseLevel({level: view.originalLevelMap[firstLevel.get('original')] || firstLevel, courseInstance: courseInstance, classroom: classroom});
-        a.play-btn.btn.btn-navy.btn-lg.m-b-1(data-href=url, data-level-slug=firstLevel.get('slug'), data-event-action="Students Start Course")
+        a.btn.btn-navy.btn-lg.m-b-1(data-href=url, data-level-slug=firstLevel.get('slug'), data-event-action="Students Start Course")
           span(data-i18n="courses.start")
         
 
