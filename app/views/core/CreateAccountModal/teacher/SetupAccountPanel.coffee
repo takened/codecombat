@@ -9,6 +9,7 @@ SetupAccountPanel = Vue.extend
   mounted: ->
     @$store.dispatch('modal/createAccount')
     .catch (e) =>
+      window.tracker?.trackEvent 'CreateAccountModal Teacher SetupAccountPanel Error', category: 'Teachers', ['Mixpanel']
       if e.i18n
         @error = @$t(e.i18n)
       else
@@ -19,8 +20,11 @@ SetupAccountPanel = Vue.extend
       @saving = false
   methods:
     clickFinish: ->
+      window.tracker?.trackEvent 'CreateAccountModal Teacher SetupAccountPanel Finish Clicked', category: 'Teachers', ['Mixpanel']
       application.router.navigate('teachers/classes', {trigger: true})
       document.location.reload()
-    clickBack: -> @$emit('back')
+    clickBack: ->
+      window.tracker?.trackEvent 'CreateAccountModal Teacher SetupAccountPanel Back Clicked', category: 'Teachers', ['Mixpanel']
+      @$emit('back')
 
 module.exports = SetupAccountPanel

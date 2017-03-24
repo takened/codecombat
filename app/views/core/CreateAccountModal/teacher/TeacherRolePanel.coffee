@@ -19,15 +19,18 @@ TeacherRolePanel = Vue.extend
   }
   methods:
     clickContinue: ->
+      window.tracker?.trackEvent 'CreateAccountModal Teacher TeacherRolePanel Continue Clicked', category: 'Teachers', ['Mixpanel']
       attrs = _.pick(@, 'phoneNumber', 'role', 'purchaserRole')
       unless _.all(attrs) and @validPhoneNumber
         @showRequired = true
         return
       @commitValues()
+      window.tracker?.trackEvent 'CreateAccountModal Teacher TeacherRolePanel Continue Success', category: 'Teachers', ['Mixpanel']
       @$emit('continue')
       
     clickBack: ->
       @commitValues()
+      window.tracker?.trackEvent 'CreateAccountModal Teacher TeacherRolePanel Back Clicked', category: 'Teachers', ['Mixpanel']
       @$emit('back')
 
     commitValues: ->

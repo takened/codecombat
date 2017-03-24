@@ -65,15 +65,18 @@ SchoolInfoPanel =
       @$store.commit('modal/updateTrialRequestProperties', attrs)
 
     clickContinue: ->
+      window.tracker?.trackEvent 'CreateAccountModal Teacher SchoolInfoPanel Continue Clicked', category: 'Teachers', ['Mixpanel']
       requiredAttrs = _.pick(@, 'district', 'city', 'state', 'country')
       unless _.all(requiredAttrs)
         @showRequired = true
         return
       @commitValues()
+      window.tracker?.trackEvent 'CreateAccountModal Teacher SchoolInfoPanel Continue Success', category: 'Teachers', ['Mixpanel']
       @$emit('continue')
 
     clickBack: ->
       @commitValues()
+      window.tracker?.trackEvent 'CreateAccountModal Teacher SchoolInfoPanel Back Clicked', category: 'Teachers', ['Mixpanel']
       @$emit('back')
 
 module.exports = SchoolInfoPanel

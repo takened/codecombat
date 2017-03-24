@@ -176,13 +176,18 @@ module.exports = class BasicInfoView extends CocoView
       when 'teacher' then ['name', 'password', 'email', 'firstName', 'lastName']
       else ['name', 'password', 'email']
   
-  onClickBackButton: -> @trigger 'nav-back'
+  onClickBackButton: ->
+    if @signupState.get('path') is 'teacher'
+      window.tracker?.trackEvent 'CreateAccountModal Teacher BasicInfoView Back Clicked', category: 'Teachers', ['Mixpanel']
+    @trigger 'nav-back'
   
   onClickUseSuggestedNameLink: (e) ->
     @$('input[name="name"]').val(@state.get('suggestedName'))
     forms.clearFormAlerts(@$el.find('input[name="name"]').closest('.form-group').parent())
 
   onSubmitForm: (e) ->
+    if @signupState.get('path') is 'teacher'
+      window.tracker?.trackEvent 'CreateAccountModal Teacher BasicInfoView Submit Clicked', category: 'Teachers', ['Mixpanel']
     @state.unset('error')
     e.preventDefault()
     data = forms.formToObject(e.currentTarget)
@@ -224,6 +229,7 @@ module.exports = class BasicInfoView extends CocoView
         @signupState.set({
           signupForm: _.pick(forms.formToObject(@$el), 'firstName', 'lastName', 'email', 'name', 'password', 'subscribe')
         })
+        window.tracker?.trackEvent 'CreateAccountModal Teacher BasicInfoView Submit Success', category: 'Teachers', ['Mixpanel']
         @trigger 'signup'
         return
       
