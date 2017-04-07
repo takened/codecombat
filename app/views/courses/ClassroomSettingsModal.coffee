@@ -35,7 +35,7 @@ module.exports = class ClassroomSettingsModal extends ModalView
       return
     
     settings = @classroom.get('settings')
-    mayTweak = settings.optionsEditable or me.isAdmin()
+    mayTweak = settings?.optionsEditable or me.isAdmin()
     for k in Object.keys(attrs)
       if /^settings\//.test(k)
         val = (attrs[k].length > 0)
